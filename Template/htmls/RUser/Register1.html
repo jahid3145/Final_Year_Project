@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockPredictor - User Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-glass py-3 sticky-top">
+    <div class="container">
+      <a class="navbar-brand fs-4" href="{% url 'index' %}">
+        <i class="fas fa-chart-line me-2"></i>StockPredictor
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">User Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'serviceproviderlogin' %}">Admin Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container py-5">
+    <div class="row justify-content-center animate-fade-in-up">
+      <div class="col-lg-10 col-xl-8">
+        <div class="glass-card">
+          <div class="text-center mb-5">
+            <h2 class="fw-bold text-white mb-2">Create Your Account</h2>
+            <p class="text-secondary">Join our community and start predicting trends today.</p>
+            {% if object %}
+            <div class="alert alert-success bg-success bg-opacity-10 border-success text-success mt-3">
+              <i class="fas fa-check-circle me-2"></i> {{ object }}
+            </div>
+            {% endif %}
+          </div>
+
+          <form method="POST" role="form">
+            {% csrf_token %}
+            <div class="row g-4">
+              <!-- Account Info Section -->
+              <div class="col-12 mb-2">
+                <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Account Information</h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Username</label>
+                <input type="text" name="username" class="form-control form-control-glass" placeholder="Your username"
+                  required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Password</label>
+                <input type="password" name="password" class="form-control form-control-glass"
+                  placeholder="Create a password" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Email Address</label>
+                <input type="email" name="email" class="form-control form-control-glass" placeholder="email@example.com"
+                  required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Phone Number</label>
+                <input type="number" name="phoneno" class="form-control form-control-glass" placeholder="Contact number"
+                  required>
+              </div>
+
+              <!-- Personal Details Section -->
+              <div class="col-12 mt-4 mb-2">
+                <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Personal Details</h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Gender</label>
+                <select name="gender" class="form-select form-control-glass">
+                  <option value="" disabled selected>Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Country</label>
+                <input type="text" name="country" class="form-control form-control-glass" placeholder="Your country"
+                  required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label text-secondary small text-uppercase">State</label>
+                <input type="text" name="state" class="form-control form-control-glass" placeholder="State" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label text-secondary small text-uppercase">City</label>
+                <input type="text" name="city" class="form-control form-control-glass" placeholder="City" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label text-secondary small text-uppercase">Address</label>
+                <textarea name="address" class="form-control form-control-glass" rows="1"
+                  placeholder="Detailed address"></textarea>
+              </div>
+            </div>
+
+            <div class="d-grid mt-5">
+              <button type="submit" name="submit" class="btn btn-dynamic btn-lg py-3">Register Now <i
+                  class="fas fa-user-plus ms-2"></i></button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <p class="text-secondary small">Already have an account? <a href="{% url 'login' %}"
+                class="text-white text-decoration-none fw-bold">Sign In</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

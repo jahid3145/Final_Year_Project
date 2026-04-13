@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}StockPredictor{% endblock %}</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <div class="scroll-progress" id="scrollBar"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-glass py-3 sticky-top">
+    <div class="container">
+      <a class="navbar-brand fs-4" href="{% url 'index' %}">
+        <i class="fas fa-chart-line me-2"></i>StockPredictor
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'Predict_Investor_Sentiment_Type' %}">Predict Sentiment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ratings' %}">Ratings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ViewYourProfile' %}">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{% url 'index' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5 animate-fade-in-up">
+    {% block userblock %}
+    {% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center mt-auto" style="border-top: 1px solid rgba(255,255,255,0.05);">
+    <p class="mb-0 text-secondary small">&copy; 2026 StockPredictor. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Scroll Progress Bar
+    window.onscroll = function () {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      document.getElementById("scrollBar").style.width = scrolled + "%";
+
+      // Navbar Scrolled Effect
+      const nav = document.querySelector('.navbar');
+      if (winScroll > 50) {
+        nav.classList.add('navbar-scrolled');
+      } else {
+        nav.classList.remove('navbar-scrolled');
+      }
+    };
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

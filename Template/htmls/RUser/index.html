@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction - Home</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand fs-4" href="{% url 'index' %}">
+                <i class="fas fa-chart-line me-2"></i>StockPredictor
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">User Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'serviceproviderlogin' %}">Admin Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5 mt-4">
+        <div class="row align-items-center mb-5 animate-fade-in-up">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold text-gradient mb-4">Stock Price Prediction Model</h1>
+                <p class="lead text-secondary mb-4">Based on Investor Sentiment and Optimized Deep Learning algorithms.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'login' %}" class="btn btn-dynamic">Get Started <i
+                            class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="{% url 'Register1' %}" class="btn btn-outline-light px-4 py-2"
+                        style="border-radius: 8px;">Register</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <!-- Using the old image but stylizing it -->
+                <img src="{% static 'Banner.jpg' %}" alt="Banner" class="img-fluid rounded-4 shadow-lg"
+                    style="opacity: 0.9; border: 1px solid rgba(255,255,255,0.1);">
+            </div>
+        </div>
+
+        <div class="row text-center mt-5 mb-5 delay-200 animate-fade-in-up">
+            <div class="col-12">
+                <h2 class="fw-bold mb-4">Deep Learning & Sentiment Analysis</h2>
+                <div class="glass-card floating text-start mx-auto" style="max-width: 900px;">
+                    <div class="row align-items-center">
+                        <div class="col-md-5 mb-4 mb-md-0">
+                            <img src="{% static 'img1.jpg' %}" alt="Process" class="img-fluid rounded-3 w-100">
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="text-white mb-3">How It Works</h4>
+                            <p class="text-secondary" style="line-height: 1.8;">
+                                Accurate prediction of stock prices can reduce investment risks and increase returns.
+                                This platform combines multi-source data affecting stock prices and applies
+                                <strong>sentiment analysis</strong>, swarm intelligence, and deep learning to build the
+                                <em>MS-SSA-LSTM</em> model.
+                            </p>
+                            <ul class="text-secondary mt-3">
+                                <li><strong>Extracts sentiment indexing</strong> from active forum posts.</li>
+                                <li><strong>Optimizes LSTM</strong> hyperparameters automatically.</li>
+                                <li><strong>Forecasts trends</strong> (Uptrends vs Downtrends) effectively.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center mt-auto" style="border-top: 1px solid rgba(255,255,255,0.05);">
+        <p class="mb-0 text-secondary">&copy; 2026 StockPredictor. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

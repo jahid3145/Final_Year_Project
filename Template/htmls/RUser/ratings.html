@@ -1,0 +1,28 @@
+{% extends 'RUser/Header.html' %}
+{% block title %}Ratings - StockPredictor{% endblock %}
+
+{% block userblock %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 text-center animate-fade-in-up">
+        <div class="glass-card py-5">
+            <div class="mb-4">
+                <i class="fas fa-star text-warning fs-1 mb-3"></i>
+                <h2 class="text-white fw-bold">User Ratings</h2>
+                <p class="text-secondary">Feedback and ratings from our community members.</p>
+            </div>
+
+            <div class="p-5 border border-white border-opacity-10 rounded-4 bg-white bg-opacity-5">
+                <i class="fas fa-tools text-secondary mb-3 d-block" style="font-size: 40px;"></i>
+                <h4 class="text-white opacity-75">Feature Coming Soon</h4>
+                <p class="text-secondary mb-0">We are currently developing our community rating system to help users
+                    share insights on stock predictions.</p>
+            </div>
+
+            <div class="mt-5">
+                <a href="{% url 'Predict_Investor_Sentiment_Type' %}" class="btn btn-dynamic px-4">Continue
+                    Predicting</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'SProvider/Header.html' %}
+{% load static %}
+{% block title %}Model Comparison - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<div class="row">
+     <div class="col-12">
+          <div class="glass-card">
+               <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div>
+                         <h2 class="fw-bold text-primary mb-1"><i
+                                   class="fas fa-chart-column me-2 text-gradient"></i>Accuracy Benchmarks</h2>
+                         <p class="text-secondary mb-0">Comparative visualization of algorithm performance based on
+                              training metrics.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                         <a href="{% url 'charts1' 'line' %}" class="btn btn-outline-info btn-sm px-3">Line View</a>
+                         <a href="{% url 'charts1' 'pie' %}" class="btn btn-outline-info btn-sm px-3">Pie View</a>
+                    </div>
+               </div>
+
+               <!-- Dark Glass Container -->
+               <div class="p-3 mt-4 rounded-4 shadow-lg animate-fade-in-up delay-200" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border);">
+                   <div id="barChartContainer" class="chart-container" style="height: 550px; width: 100%; border: none; background: transparent;"></div>
+               </div>
+          </div>
+     </div>
+</div>
+
+<script src="{% static 'canvasjs.min.js' %}"></script>
+<script>
+     window.onload = function () {
+          CanvasJS.addColorSet("brightGradients", ["#38BDF8", "#34D399", "#818CF8", "#FBBF24", "#F472B6", "#A78BFA"]);
+          
+          var chart = new CanvasJS.Chart("barChartContainer", {
+               backgroundColor: "transparent",
+               height: 500,
+               colorSet: "brightGradients",
+               animationEnabled: true,
+               animationDuration: 1500,
+               theme: "dark2",
+               title: {
+                    text: "",
+                    fontFamily: "Inter"
+               },
+               axisY: {
+                    title: "Accuracy (%)",
+                    titleFontFamily: "Inter",
+                    titleFontColor: "#cbd5e1",
+                    labelFontColor: "#cbd5e1",
+                    gridColor: "rgba(255,255,255,0.05)",
+                    suffix: "%",
+                    maximum: 100
+               },
+               axisX: {
+                    labelFontFamily: "Inter",
+                    labelFontColor: "#cbd5e1",
+                    tickColor: "rgba(255,255,255,0.1)",
+                    labelAutoFit: true
+               },
+               data: [{
+                    type: "column",
+                    yValueFormatString: "##0.00\"%\"",
+                    indexLabel: "{y}%",
+                    indexLabelFontColor: "#e2e8f0",
+                    indexLabelFontFamily: "Inter",
+                    indexLabelFontWeight: "bold",
+                    indexLabelPlacement: "outside",
+                    dataPoints: [
+                         {% for o in form %}
+                { y: {{ o.dcount|default:0 }}, label: "{{o.names}}" },
+          {% endfor %}
+            ]
+        }]
+    });
+     chart.render();
+}
+</script>
+{% endblock %}

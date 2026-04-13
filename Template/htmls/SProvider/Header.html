@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Admin Dashboard - StockPredictor{% endblock %}</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <div class="scroll-progress" id="scrollBar"></div>
+
+  <!-- Admin Navigation -->
+  <nav class="navbar navbar-expand-xl navbar-dark navbar-glass py-2 sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="{% url 'View_Remote_Users' %}">
+        <i class="fas fa-shield-alt me-2 text-gradient"></i>AdminPortal
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="adminNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1 small">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'View_Remote_Users' %}"><i class="fas fa-users me-1"></i> Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'train_model' %}"><i class="fas fa-microchip me-1"></i> Train Model</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'View_Prediction_Of_Investor_Sentiment_Type' %}"><i
+                class="fas fa-list me-1"></i> Predictions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'View_Prediction_Of_Investor_Sentiment_Type_Ratio' %}"><i
+                class="fas fa-pie-chart me-1"></i> Ratios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-chart-bar me-1"></i> Analytics
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark bg-dark border-secondary">
+              <li><a class="dropdown-item" href="{% url 'likeschart' 'bar' %}">Accuracy Bar Chart</a></li>
+              <li><a class="dropdown-item" href="{% url 'dislikeschart' 'bar' %}">Alternative Analytics</a></li>
+              <li><a class="dropdown-item" href="{% url 'charts1' 'line' %}">Accuracy Results</a></li>
+              <li><a class="dropdown-item" href="{% url 'charts' 'line' %}">Ratio Results</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-info" href="{% url 'Download_Predicted_DataSets' %}"><i
+                class="fas fa-download me-1"></i> Export XLS</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <a href="{% url 'index' %}" class="btn btn-sm btn-outline-danger px-4">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid py-5 px-lg-5 animate-fade-in-up">
+    {% block researchblock %}
+    {% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center mt-auto" style="border-top: 1px solid rgba(255,255,255,0.05);">
+    <p class="mb-0 text-secondary small">&copy; 2026 Admin Management System. StockPredictor</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Scroll Progress Bar
+    window.onscroll = function () {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      document.getElementById("scrollBar").style.width = scrolled + "%";
+
+      // Navbar Scrolled Effect
+      const nav = document.querySelector('.navbar');
+      if (winScroll > 50) {
+        nav.classList.add('navbar-scrolled');
+      } else {
+        nav.classList.remove('navbar-scrolled');
+      }
+    };
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

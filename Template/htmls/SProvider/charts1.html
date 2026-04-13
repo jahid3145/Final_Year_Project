@@ -1,0 +1,117 @@
+{% extends 'SProvider/Header.html' %}
+{% load static %}
+{% block title %}Accuracy Metrics - Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+     .canvasjs-chart-container {
+          border-radius: 12px;
+          /* overflow: hidden removed to fix chart invisible issue */
+     }
+</style>
+{% endblock %}
+
+{% block researchblock %}
+<div class="row">
+     <div class="col-lg-3 mb-4 animate-fade-in-up">
+          <div class="glass-card h-100">
+               <h5 class="text-primary border-bottom border-secondary pb-3 mb-4">Metric Visualization</h5>
+               <div class="d-grid gap-3">
+                    <a href="{% url 'charts1' 'line' %}"
+                         class="btn btn-outline-info d-flex justify-content-between align-items-center p-3 {% if chart_type == 'line' %}active bg-primary border-primary text-white{% endif %}">
+                         <span><i class="fas fa-chart-line me-2"></i> Line Graph</span>
+                         <i class="fas fa-chevron-right small opacity-50"></i>
+                    </a>
+                    <a href="{% url 'charts1' 'pie' %}"
+                         class="btn btn-outline-info d-flex justify-content-between align-items-center p-3 {% if chart_type == 'pie' %}active bg-primary border-primary text-white{% endif %}">
+                         <span><i class="fas fa-chart-pie me-2"></i> Pie Distribution</span>
+                         <i class="fas fa-chevron-right small opacity-50"></i>
+                    </a>
+                    <a href="{% url 'likeschart' 'bar' %}"
+                         class="btn btn-outline-info d-flex justify-content-between align-items-center p-3">
+                         <span><i class="fas fa-chart-bar me-2"></i> Accuracy Bar Chart</span>
+                         <i class="fas fa-chevron-right small opacity-50"></i>
+                    </a>
+               </div>
+
+               <div class="mt-5 p-3 rounded-3" style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--glass-border);">
+                    <p class="text-secondary small mb-0"><i class="fas fa-vial me-1"></i> These metrics display the
+                         relative accuracy percentages across all trained machine learning models.</p>
+               </div>
+          </div>
+     </div>
+
+     <div class="col-lg-9 animate-fade-in-up delay-100">
+          <div class="glass-card">
+               <h3 class="text-primary mb-4 fw-bold">Algorithm Accuracy Comparison</h3>
+               <!-- Dark Glass Container -->
+               <div class="p-3 mt-4 rounded-4 shadow-lg animate-fade-in-up delay-200" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border);">
+                   <div id="accuracyChart" class="chart-container" style="height: 500px; width: 100%; border: none; background: transparent;"></div>
+               </div>
+          </div>
+     </div>
+</div>
+
+<script src="{% static 'canvasjs.min.js' %}"></script>
+<script>
+     window.onload = function () {
+          CanvasJS.addColorSet("brightGradients", ["#38BDF8", "#34D399", "#818CF8", "#FBBF24", "#F472B6", "#A78BFA"]);
+          
+          var chart = new CanvasJS.Chart("accuracyChart", {
+               backgroundColor: "transparent",
+               height: 500,
+               colorSet: "brightGradients",
+               animationEnabled: true,
+               animationDuration: 1500,
+               theme: "dark2",
+               title: {
+                    text: "",
+                    fontFamily: "Inter"
+               },
+               axisX: {
+                    labelFontFamily: "Inter",
+                    labelFontColor: "#cbd5e1",
+                    lineColor: "rgba(255,255,255,0.1)",
+                    tickColor: "rgba(255,255,255,0.1)"
+               },
+               axisY: {
+                    labelFontFamily: "Inter",
+                    labelFontColor: "#cbd5e1",
+                    gridThickness: 0.5,
+                    gridColor: "rgba(255,255,255,0.05)",
+                    lineColor: "rgba(255,255,255,0.1)",
+                    tickColor: "rgba(255,255,255,0.1)",
+                    suffix: "%",
+                    maximum: 100
+               },
+               legend: {
+                    fontFamily: "Inter",
+                    fontColor: "#e2e8f0"
+               },
+               data: [{
+            {% if chart_type == "line" %}
+                type: "line",
+               lineThickness: 3,
+               markerSize: 10,
+               {% elif chart_type == "pie" %}
+               type: "pie",
+               showInLegend: true,
+               toolTipContent: "{label}: <strong>{y}%</strong>",
+               indexLabel: "{label} - {y}%",
+               indexLabelFontColor: "#e2e8f0",
+               indexLabelFontFamily: "Inter",
+               indexLabelFontWeight: "bold",
+               {% elif chart_type == "bar" %}
+               type: "column",
+               {% endif %}
+               dataPoints: [
+          {% for o in form %}
+               { y: {{ o.dcount|default:0 }}, label: "{{o.names}}" },
+          {% endfor %}
+            ]
+        }]
+    });
+     chart.render();
+}
+</script>
+{% endblock %}

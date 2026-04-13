@@ -1,0 +1,31 @@
+A Stock Price Prediction Model Based on Investor Sentiment and Optimized Deep Learning
+
+
+IEEE Transaction on Machine Learning,Volume:11,Issue Date:22.May.2023
+
+
+Deep learning, stock price prediction, sentiment analysis, sentiment dictionary, sparrow search algorithm.
+
+
+A_Stock_Price_Prediction_Model
+
+
+a_stock_price_prediction_model
+
+
+predict_investor_sentiment
+
+
+Investor_Age	
+Investor_Gender	
+PDate	
+Stock_Text	
+Stock_Name	
+Company_Name
+Prediction
+
+
+
+
+Uptrends
+Downtrends

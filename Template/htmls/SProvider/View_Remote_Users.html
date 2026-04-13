@@ -1,0 +1,94 @@
+{% extends 'SProvider/Header.html' %}
+{% block title %}Manage Users - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<style>
+	/* Custom Background Override for View Remote Users Page */
+	body {
+		background: linear-gradient(to right bottom, #0f172a, #172554) !important;
+		background-attachment: fixed !important;
+	}
+	
+	.custom-users-card {
+		background: rgba(30, 58, 138, 0.15) !important; 
+		border: 1px solid rgba(59, 130, 246, 0.2) !important;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(59, 130, 246, 0.05);
+	}
+</style>
+
+<div class="row">
+	<div class="col-12">
+		<div class="glass-card custom-users-card">
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<div>
+					<h2 class="fw-bold text-gradient mb-1"><i class="fas fa-users-cog me-2 text-primary"></i>All
+						Registered Users</h2>
+					<p class="text-secondary mb-0">Total counts and details of all platform participants.</p>
+				</div>
+				<div class="text-end">
+					<span class="badge bg-primary px-3 py-2 rounded-pill">Total: {{ objects|length }} Users</span>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-dark table-hover table-glass mb-0">
+					<thead>
+						<tr>
+							<th class="text-white">User Name</th>
+							<th class="text-white">Email Address</th>
+							<th class="text-white">Gender</th>
+							<th class="text-white">Location</th>
+							<th class="text-white">Contact</th>
+							<th class="text-white">Address</th>
+							<th class="text-white text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for o in objects %}
+						<tr>
+							<td>
+								<div class="d-flex align-items-center">
+									<div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3"
+										style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;">
+										<i class="fas fa-user text-primary small"></i>
+									</div>
+									<span class="fw-600 accent-indigo">{{ o.username }}</span>
+								</div>
+							</td>
+							<td class="text-white-50">{{ o.email }}</td>
+							<td>
+								<span
+									class="badge {% if o.gender == 'Male' %}bg-info{% else %}bg-warning{% endif %} bg-opacity-25 border border-opacity-50"
+									style="border-color: currentColor !important;">
+									{{ o.gender }}
+								</span>
+							</td>
+							<td>
+								<div class="small text-white">
+									<i class="fas fa-map-marker-alt text-info me-1"></i> {{ o.city }}, {{ o.state }}
+									<div class="text-light opacity-75 ms-3 small">{{ o.country }}</div>
+								</div>
+							</td>
+							<td class="text-white">{{ o.phoneno }}</td>
+							<td><span class="small text-light">{{ o.address }}</span></td>
+							<td class="text-center">
+								<a href="{% url 'Delete_Remote_User' o.id %}" class="btn btn-sm btn-outline-danger shadow-sm py-1 px-2" onclick="return confirm('Are you sure you want to delete this user?');">
+									<i class="fas fa-trash-alt"></i> Delete
+								</a>
+							</td>
+						</tr>
+						{% empty %}
+						<tr>
+							<td colspan="7" class="text-center py-5 text-secondary">
+								<i class="fas fa-users-slash fs-1 d-block mb-3 opacity-25"></i>
+								No users registered yet.
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

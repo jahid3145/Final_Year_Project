@@ -1,0 +1,58 @@
+{% extends 'SProvider/Header.html' %}
+{% block title %}Prediction Ratios - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<div class="row justify-content-center">
+	<div class="col-lg-8 animate-fade-in-up">
+		<div class="glass-card">
+			<h2 class="fw-bold mb-4"><i class="fas fa-chart-pie me-2 accent-amber"></i>Sentiment
+				Distribution Ratio</h2>
+			<p class="text-secondary opacity-75 mb-5">Overview of the percentage balance between different market sentiment
+				predictions.</p>
+
+			<div class="row g-5 align-items-center">
+				<div class="col-md-7">
+					<div class="table-responsive">
+						<table class="table table-dark table-glass">
+							<thead>
+								<tr>
+									<th class="text-secondary fw-bold text-uppercase">Trend Type</th>
+									<th class="text-end text-secondary fw-bold text-uppercase">Percentage Ratio</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for object in objs %}
+								<tr>
+									<td>
+										<div class="d-flex align-items-center gap-3">
+											<div class="rounded-pill {% if object.names == 'Uptrends' %}bg-success{% else %}bg-danger{% endif %} px-3 py-1"
+												style="display: flex; align-items: center; justify-content: center; min-width: 100px;">
+												<i
+													class="fas {% if object.names == 'Uptrends' %}fa-arrow-up{% else %}fa-arrow-down{% endif %} small text-black me-2"></i>
+											    <span class="text-black fw-bold">{{ object.names }}</span>
+                                            </div>
+										</div>
+									</td>
+									<td class="text-end fw-bold text-gradient fs-4">{{ object.ratio|floatformat:2 }}%</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div
+						class="p-4 rounded-4 text-center animate-fade-in-up delay-200" style="background: var(--glass-bg); border: 1px solid var(--glass-border);">
+						<i class="fas fa-balance-scale accent-cyan fs-1 mb-3 opacity-50"></i>
+						<h5 class="text-primary">Market Sentiment Output</h5>
+						<p class="text-secondary small">This data represents the aggregate result of user-driven
+							predictions processed by our Voting Classifier.</p>
+						<a href="{% url 'charts' 'pie' %}" class="btn btn-sm btn-dynamic mt-3 w-100">View Interactive
+							Pie Chart</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'RUser/Header.html' %}
+{% block title %}Predict Sentiment - StockPredictor{% endblock %}
+
+{% block userblock %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="glass-card mb-5 animate-fade-in-up">
+      <h2 class="fw-bold text-gradient mb-4"><i class="fas fa-magic me-2 text-primary"></i>Predict Investor Sentiment</h2>
+      <p class="text-secondary mb-4">Enter the dataset details below to analyze the stock trend using our MS-SSA-LSTM
+        deep learning model.</p>
+
+      <form role="form" method="POST">
+        {% csrf_token %}
+        <div class="row g-4">
+          <div class="col-md-4">
+            <label class="form-label text-secondary small text-uppercase">Investor Age</label>
+            <input type="text" name="Investor_Age" class="form-control form-control-glass" placeholder="e.g. 35"
+              required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label text-secondary small text-uppercase">Investor Gender</label>
+            <select name="Investor_Gender" class="form-select form-control-glass">
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label text-secondary small text-uppercase">Prediction Date</label>
+            <input type="text" name="PDate" class="form-control form-control-glass" placeholder="YYYY-MM-DD" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-secondary small text-uppercase">Stock Name</label>
+            <input type="text" name="Stock_Name" class="form-control form-control-glass" placeholder="e.g. AAPL"
+              required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-secondary small text-uppercase">Company Name</label>
+            <input type="text" name="Company_Name" class="form-control form-control-glass" placeholder="e.g. Apple Inc."
+              required>
+          </div>
+          <div class="col-12">
+            <label class="form-label text-secondary small text-uppercase">Stock Information / Forum Post Text</label>
+            <textarea name="Stock_Text" class="form-control form-control-glass" rows="4"
+              placeholder="Enter the text to analyze sentiment..." required></textarea>
+          </div>
+          <div class="col-12 text-end mt-4">
+            <button type="submit" name="submit" class="btn btn-dynamic btn-lg px-5">Analyze Sentiment <i
+                class="fas fa-search-dollar ms-2"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {% if objs %}
+    <div class="glass-card {% if objs == 'Uptrends' %}border-success{% else %}border-danger{% endif %} animate-fade-in-up delay-100 floating"
+      style="background: {% if objs == 'Uptrends' %}rgba(16, 185, 129, 0.05){% else %}rgba(239, 68, 68, 0.05){% endif %};">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h5 class="{% if objs == 'Uptrends' %}text-success{% else %}text-danger{% endif %} mb-1 fw-bold"><i class="fas fa-check-circle me-2"></i>Analysis Complete</h5>
+          <h3 class="{% if objs == 'Uptrends' %}accent-emerald{% else %}text-light{% endif %} mb-0">Predicted Investor Sentiment Type: <span class="{% if objs == 'Uptrends' %}text-gradient{% else %}text-danger fw-bold{% endif %}">
+              {% if objs == 'Uptrends' %}
+              <i class="fas fa-arrow-trend-up"></i>
+              {% else %}
+              <i class="fas fa-arrow-trend-down"></i>
+              {% endif %}
+              {{ objs }}</span></h3>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <div class="d-inline-block p-3 rounded-circle {% if objs == 'Uptrends' %}bg-success border-success{% else %}bg-danger border-danger{% endif %} bg-opacity-20 border">
+            <i
+              class="fas {% if objs == 'Uptrends' %}fa-chart-line text-success{% else %}fa-chart-area text-danger{% endif %} fs-2"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'SProvider/Header.html' %}
+{% block title %}Model Training - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<div class="row justify-content-center">
+	<div class="col-lg-10">
+		<div class="glass-card">
+			<div class="d-flex justify-content-between align-items-center mb-5">
+				<div>
+					<h2 class="fw-bold text-white mb-1"><i class="fas fa-brain me-2 text-gradient"></i>Model Training
+						Results</h2>
+					<p class="text-secondary mb-0">Accuracy and performance metrics for the latest dataset training
+						session.</p>
+				</div>
+				<a href="{% url 'train_model' %}" class="btn btn-sm btn-outline-light"><i class="fas fa-sync me-2"></i>
+					Retrain All</a>
+			</div>
+
+			<div class="row g-4">
+				{% for object in objs %}
+				<div class="col-md-6 col-xl-4">
+					<div class="glass-card h-100 p-4 border-opacity-10 floating"
+						style="background: rgba(255,255,255,0.02); animation-delay: {{ forloop.counter0 }}00ms;">
+						<div class="d-flex align-items-center mb-3">
+							<div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+								<i class="fas fa-microchip text-primary"></i>
+							</div>
+							<h5 class="text-white mb-0 fw-bold">{{ object.names }}</h5>
+						</div>
+						<div class="mt-4">
+							<label class="text-secondary small text-uppercase fw-bold mb-2">Accuracy Score</label>
+							<div class="d-flex align-items-end">
+								<h2 class="text-gradient display-6 fw-bold mb-0">{{ object.ratio|stringformat:".2f" }}
+								</h2>
+								<span class="text-secondary ms-2 mb-2 fs-4">%</span>
+							</div>
+						</div>
+						<div class="progress mt-4 bg-white bg-opacity-5" style="height: 6px; border-radius: 10px;">
+							<div class="progress-bar bg-primary shadow-lg" role="progressbar"
+								style="width: {{ object.ratio }}%; border-radius: 10px;"></div>
+						</div>
+					</div>
+				</div>
+				{% empty %}
+				<div class="col-12 text-center py-5">
+					<div class="text-secondary opacity-25 mb-4">
+						<i class="fas fa-vial-circle-check" style="font-size: 80px;"></i>
+					</div>
+					<h4 class="text-white">Begin Training Session</h4>
+					<p class="text-secondary">Click the button below to process Datasets.csv and evaluate model
+						performance.</p>
+					<a href="{% url 'train_model' %}" class="btn btn-dynamic mt-3">Start Training Process</a>
+				</div>
+				{% endfor %}
+			</div>
+
+			{% if objs %}
+			<div
+				class="mt-5 p-4 rounded-3 border border-white border-opacity-10 bg-white bg-opacity-5 animate-fade-in-up delay-300">
+				<div class="row align-items-center">
+					<div class="col-md-8">
+						<h6 class="text-secondary text-uppercase fw-bold small mb-2">Quick Action</h6>
+						<h4 class="text-white">Analyze Prediction Accuracy</h4>
+						<p class="text-secondary mb-0">Visualize these results in a dynamic bar chart to compare
+							performance across different algorithms.</p>
+					</div>
+					<div class="col-md-4 text-md-end mt-3 mt-md-0">
+						<a href="{% url 'likeschart' 'bar' %}" class="btn btn-outline-info">View Bar Chart <i
+								class="fas fa-chart-bar ms-2"></i></a>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'SProvider/Header.html' %}
+{% block title %}Prediction History - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<style>
+	/* Custom Background Override for Prediction Logs Page */
+	body {
+		background: linear-gradient(135deg, #0f172a 0%, #1a1035 50%, #0f2b1a 100%) !important;
+		background-attachment: fixed !important;
+	}
+
+	.prediction-card {
+		background: rgba(16, 40, 28, 0.2) !important;
+		border: 1px solid rgba(16, 185, 129, 0.2) !important;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(16, 185, 129, 0.03);
+	}
+
+	.prediction-card thead th {
+		background: rgba(16, 185, 129, 0.08) !important;
+		color: #34D399 !important;
+		border-bottom: 1px solid rgba(16, 185, 129, 0.2) !important;
+	}
+
+	.prediction-card tbody tr {
+		border-bottom: 1px solid rgba(16, 185, 129, 0.07) !important;
+	}
+
+	.prediction-card tbody tr:hover td {
+		background: rgba(16, 185, 129, 0.05) !important;
+	}
+
+	.badge-uptrend {
+		background: rgba(16, 185, 129, 0.35) !important;
+		color: #6EE7B7 !important;
+		border: 1.5px solid #10B981 !important;
+		font-size: 0.85rem;
+		letter-spacing: 0.5px;
+		text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+	}
+
+	.badge-downtrend {
+		background: rgba(239, 68, 68, 0.35) !important;
+		color: #FCA5A5 !important;
+		border: 1.5px solid #EF4444 !important;
+		font-size: 0.85rem;
+		letter-spacing: 0.5px;
+		text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+	}
+
+	.investor-age {
+		color: #38BDF8 !important;
+		font-weight: 700;
+	}
+
+	.stock-name-text {
+		color: #A78BFA !important;
+		font-weight: 700;
+	}
+</style>
+
+<div class="row">
+	<div class="col-12 animate-fade-in-up">
+		<div class="glass-card prediction-card">
+			<div class="d-flex justify-content-between align-items-center mb-5">
+				<div>
+					<h2 class="fw-bold mb-1" style="background: linear-gradient(to right, #FDE68A, #F59E0B); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"><i class="fas fa-history me-2 text-warning"></i>Prediction Logs</h2>
+					<p class="text-secondary mb-0">History of all investor sentiment predictions made by remote users.</p>
+				</div>
+				<div class="d-flex gap-2">
+					<a href="{% url 'Download_Predicted_DataSets' %}" class="btn btn-sm btn-outline-success">
+						<i class="fas fa-file-excel me-2"></i>Export Data
+					</a>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-dark table-hover table-glass mb-0">
+					<thead>
+						<tr>
+							<th class="ps-4 text-white">Investor Details</th>
+							<th class="text-white">Date</th>
+							<th style="width: 30%;" class="text-white">Stock Analysis Text</th>
+							<th class="text-white">Stock & Company</th>
+							<th class="text-center text-info fs-5">Trend Prediction</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for object in list_objects %}
+						<tr>
+							<td class="ps-4">
+								<div class="investor-age">{{ object.Investor_Age }} yrs</div>
+								<div class="small text-light">{{ object.Investor_Gender }}</div>
+							</td>
+							<td>
+								<span class="small text-light"><i class="far fa-calendar-alt me-1"></i> {{ object.PDate }}</span>
+							</td>
+							<td>
+								<div class="small text-light text-truncate" style="max-width: 300px;"
+									title="{{ object.Stock_Text }}">
+									{{ object.Stock_Text }}
+								</div>
+							</td>
+							<td>
+								<div class="stock-name-text">{{ object.Stock_Name }}</div>
+								<div class="small text-light">{{ object.Company_Name }}</div>
+							</td>
+							<td class="text-center">
+								{% if object.Prediction == 'Uptrends' %}
+								<span class="badge badge-uptrend py-2 px-3 fw-bold">
+									<i class="fas fa-arrow-trend-up me-2"></i> Uptrends
+								</span>
+								{% else %}
+								<span class="badge badge-downtrend py-2 px-3 fw-bold">
+									<i class="fas fa-arrow-trend-down me-2"></i> Downtrends
+								</span>
+								{% endif %}
+							</td>
+						</tr>
+						{% empty %}
+						<tr>
+							<td colspan="5" class="text-center py-5">
+								<div class="text-secondary opacity-25 mb-3">
+									<i class="fas fa-database" style="font-size: 50px;"></i>
+								</div>
+								<p class="text-secondary">No prediction records found in the database.</p>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'SProvider/Header.html' %}
+{% block title %}Export Data - Admin Dashboard{% endblock %}
+
+{% block researchblock %}
+<div class="row justify-content-center">
+	<div class="col-lg-6 animate-fade-in-up">
+		<div class="glass-card text-center py-5">
+			<div class="mb-4">
+				<div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+					style="width: 100px; height: 100px; background: rgba(16, 185, 129, 0.1); border: 2px solid var(--secondary-color);">
+					<i class="fas fa-file-excel text-secondary fs-1"></i>
+				</div>
+				<h2 class="fw-bold text-white mb-2">Dataset Export Ready</h2>
+				<p class="text-secondary">Your prediction records have been serialized and are ready for download.</p>
+			</div>
+
+			<div class="p-4 rounded-3 bg-white bg-opacity-5 border border-white border-opacity-10 mb-5">
+				<ul class="text-start text-secondary small mb-0">
+					<li class="mb-2">Includes Investor Age, Gender, and PDate.</li>
+					<li class="mb-2">Contains full Stock Analysis Text and Company Name.</li>
+					<li>Includes AI Prediction Results (Uptrends/Downtrends).</li>
+				</ul>
+			</div>
+
+			<div class="d-grid">
+				<a href="{% url 'Download_Predicted_DataSets' %}" class="btn btn-dynamic btn-lg">
+					<i class="fas fa-cloud-download-alt me-2"></i> Download Predicted_Datasets.xls
+				</a>
+			</div>
+
+			<div class="mt-4">
+				<a href="{% url 'View_Prediction_Of_Investor_Sentiment_Type' %}"
+					class="text-secondary small text-decoration-none">
+					<i class="fas fa-arrow-left me-1"></i> Back to Prediction Logs
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
